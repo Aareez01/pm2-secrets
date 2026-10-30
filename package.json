@@ -1,0 +1,40 @@
+{
+  "name": "pm2-secrets",
+  "version": "0.1.0",
+  "description": "Fetch secrets from a vault and inject them into PM2 apps, with rotation and zero-downtime reload.",
+  "keywords": ["pm2", "pm2-module", "secrets", "vault", "aws", "ssm", "devops"],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "engines": { "node": ">=18" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "apps": [
+    { "name": "pm2-secrets", "script": "dist/index.js", "instances": 1,
+      "exec_mode": "fork", "autorestart": true, "max_memory_restart": "120M" }
+  ],
+  "config": {
+    "configFile": "",
+    "refreshSeconds": 300,
+    "logLevel": "info"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run test/unit"
+  },
+  "dependencies": { "js-yaml": "^4.1.0", "zod": "^3.23.8" },
+  "peerDependencies": {
+    "pm2": ">=5",
+    "@aws-sdk/client-secrets-manager": "^3.0.0",
+    "@aws-sdk/client-ssm": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "pm2": { "optional": false },
+    "@aws-sdk/client-secrets-manager": { "optional": true },
+    "@aws-sdk/client-ssm": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9", "@types/node": "^22.7.5",
+    "pm2": "^7.1.1", "typescript": "^5.6.3", "vitest": "^2.1.3"
+  }
+}
