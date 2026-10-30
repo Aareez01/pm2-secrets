@@ -125,6 +125,10 @@ vault really rotated it; the log records a fingerprint, never a value.
 **`pm2` commands hang forever** — your `PM2_HOME` path is too long. PM2 binds
 `$PM2_HOME/rpc.sock`, and Linux caps socket paths at 107 characters.
 
+## Requirements
+
+Node 18 or newer — tested on 18, 20, 22, 24 and 26 — with PM2 5 or newer.
+
 ## Development
 
 ```bash
