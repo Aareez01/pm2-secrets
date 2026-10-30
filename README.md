@@ -1,6 +1,6 @@
 # pm2-secrets
 
-Fetch secrets from a vault and inject them into PM2 apps — with rotation, and zero-downtime
+Fetch secrets from a vault and inject them into PM2 apps - with rotation, and zero-downtime
 reload for cluster apps.
 
 ```bash
@@ -19,11 +19,11 @@ apps:
     secrets:
       DB_PASSWORD: prod/api/db
       STRIPE_KEY:  prod/api/stripe
-    mode: env          # or "file" — read the next section before choosing
+    mode: env          # or "file" - read the next section before choosing
 ```
 
 Your app gets `DB_PASSWORD` and `STRIPE_KEY` without a `.env` file on the box. When the secret
-rotates in the vault, the app picks up the new value automatically — reloaded, not restarted,
+rotates in the vault, the app picks up the new value automatically - reloaded, not restarted,
 if it runs in cluster mode.
 
 ---
@@ -37,10 +37,10 @@ property of PM2, not of this module, and it is measured rather than assumed:
 | --- | --- |
 | `pm2 env <id>` | the value, in plaintext |
 | `pm2 jlist` | the value |
-| `pm2 save` → `$PM2_HOME/dump.pm2` | the value, on disk, **mode 0664 — world-readable** |
+| `pm2 save` → `$PM2_HOME/dump.pm2` | the value, on disk, **mode 0664 - world-readable** |
 
 So "no more plaintext `.env` files" is only half the story. Fetching from a vault is a real
-gain — central rotation, an audit trail, nothing secret in git, no secret baked into an image —
+gain - central rotation, an audit trail, nothing secret in git, no secret baked into an image -
 but *locally*, a direct env injection is **less private** than a `.env` file at `0600`.
 
 This module cannot mask PM2's own output; it is injecting into the structure PM2 prints. What it
@@ -84,24 +84,24 @@ if the host has other users, or if `pm2 save` is part of your boot process.
 | `aws-secrets-manager` | `region` | `GetSecretValue` per reference |
 | `aws-ssm` | `region` | `GetParameters` with decryption, batched 10 at a time |
 
-The AWS SDK is an **optional** dependency — most users of this suite are not on AWS, and nobody
+The AWS SDK is an **optional** dependency - most users of this suite are not on AWS, and nobody
 should download a cloud SDK to read a local file. If an AWS backend is configured without it,
 the error names the package to install.
 
 **This module never accepts an access key in its own configuration.** Credentials come from the
-SDK's default chain — instance role, task role, web identity. A long-lived key sitting in a
+SDK's default chain - instance role, task role, web identity. A long-lived key sitting in a
 config file is precisely the thing a secret manager exists to remove.
 
 ## Rotation
 
 Every `refreshSeconds` the secrets are re-fetched and fingerprinted. **Nothing happens unless a
-value actually changed** — no restart loop, no churn. When one does change:
+value actually changed** - no restart loop, no churn. When one does change:
 
-- **cluster apps** reload (`reloadProcessId`) — zero downtime
+- **cluster apps** reload (`reloadProcessId`) - zero downtime
 - **fork apps** restart, because there is no sibling instance to take traffic
 
 A failed fetch leaves the app exactly as it is. A backend outage must never blank a working
-app's configuration, and a missing secret is an error rather than an empty string — injecting
+app's configuration, and a missing secret is an error rather than an empty string - injecting
 `''` would start the app and break it in a way that looks like an application bug.
 
 ## How injection works
@@ -116,18 +116,18 @@ than failing mysteriously later.
 
 ## Troubleshooting
 
-**Nothing is injected** — check `pm2 logs pm2-secrets`. Apps are matched by PM2 name, must be
+**Nothing is injected** - check `pm2 logs pm2-secrets`. Apps are matched by PM2 name, must be
 `online`, and the module skips itself and other modules.
 
-**Values are not updating** — the fingerprint only changes when a value changes. Confirm the
+**Values are not updating** - the fingerprint only changes when a value changes. Confirm the
 vault really rotated it; the log records a fingerprint, never a value.
 
-**`pm2` commands hang forever** — your `PM2_HOME` path is too long. PM2 binds
+**`pm2` commands hang forever** - your `PM2_HOME` path is too long. PM2 binds
 `$PM2_HOME/rpc.sock`, and Linux caps socket paths at 107 characters.
 
 ## Requirements
 
-Node 18 or newer — tested on 18, 20, 22, 24 and 26 — with PM2 5 or newer.
+Node 18 or newer - tested on 18, 20, 22, 24 and 26 - with PM2 5 or newer.
 
 ## Development
 
