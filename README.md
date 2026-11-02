@@ -1,5 +1,7 @@
 # pm2-secrets
 
+[![CI](https://github.com/Aareez01/pm2-secrets/actions/workflows/ci.yml/badge.svg)](https://github.com/Aareez01/pm2-secrets/actions/workflows/ci.yml) [![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](./LICENSE) [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](#requirements)
+
 Fetch secrets from a vault and inject them into PM2 apps - with rotation, and zero-downtime
 reload for cluster apps.
 
