@@ -1,6 +1,6 @@
 # pm2-secrets
 
-[![CI](https://github.com/Aareez01/pm2-secrets/actions/workflows/ci.yml/badge.svg)](https://github.com/Aareez01/pm2-secrets/actions/workflows/ci.yml) [![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](./LICENSE) [![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](#requirements)
+[![CI](https://github.com/Aareez01/pm2-secrets/actions/workflows/ci.yml/badge.svg)](https://github.com/Aareez01/pm2-secrets/actions/workflows/ci.yml) [![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](./LICENSE) [![node](https://img.shields.io/badge/node-%3E%3D22-brightgreen)](#requirements)
 
 Fetch secrets from a vault and inject them into PM2 apps - with rotation, and zero-downtime
 reload for cluster apps.
@@ -129,7 +129,7 @@ vault really rotated it; the log records a fingerprint, never a value.
 
 ## Requirements
 
-Node 18 or newer - tested on 18, 20, 22, 24 and 26 - with PM2 5 or newer.
+Node 22 or newer - tested on 22, 24 and 26 - with PM2 5 or newer.
 
 ## Development
 
