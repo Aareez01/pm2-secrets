@@ -11,7 +11,7 @@ const appConfig = z.object({
    * ENV_NAME -> reference in the backend. The reference is opaque: a Secrets Manager
    * secret id, an SSM parameter name, or a key in the secrets file.
    */
-  secrets: z.record(z.string().min(1)).refine((m) => Object.keys(m).length > 0, {
+  secrets: z.record(z.string(), z.string().min(1)).refine((m) => Object.keys(m).length > 0, {
     message: 'an app with no secrets listed has nothing to inject',
   }),
   /** 'env' is convenient; 'file' keeps values out of pm2_env. See injector.ts. */
@@ -28,8 +28,8 @@ export const configSchema = z.object({
   secretsDir: z.string().default('/run/pm2-secrets'),
   /** Apply values on first sight, or wait for a rotation. */
   injectOnStart: z.boolean().default(true),
-  backends: z.record(backend).default({}),
-  apps: z.record(appConfig).default({}),
+  backends: z.record(z.string(), backend).default({}),
+  apps: z.record(z.string(), appConfig).default({}),
 }).superRefine((c, ctx) => {
   const names = Object.keys(c.backends);
   for (const [app, cfg] of Object.entries(c.apps)) {
