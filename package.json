@@ -1,6 +1,6 @@
 {
   "name": "pm2-secrets",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Fetch secrets from a vault and inject them into PM2 apps, with rotation and zero-downtime reload.",
   "keywords": [
     "pm2",
